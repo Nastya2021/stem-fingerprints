@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+.pytest_cache/
+
+# Редактори й ОС
+.idea/
+.vscode/
+.DS_Store
+
+# Дані й результати
+data/*
+!data/README.md
+results/*
+!results/.gitkeep
