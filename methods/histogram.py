@@ -24,3 +24,11 @@ def equalize_histogram(image):
 
     # 4. Заміна кожного пікселя за таблицею
     return table[image]
+
+def stretch_contrast(image, low_pct=1, high_pct=99):
+    """Лінійне розтягування контрасту: low_pct і high_pct перцентилі -> 0 і 255."""
+    lo, hi = np.percentile(image, [low_pct, high_pct])
+    if hi - lo < 1e-9:
+        return image.copy()
+    out = (image.astype(np.float64) - lo) / (hi - lo) * 255
+    return np.clip(np.round(out), 0, 255).astype(np.uint8)

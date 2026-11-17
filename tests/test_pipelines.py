@@ -10,7 +10,7 @@ def _img():
 
 def test_pipeline1_returns_three_stages():
     out = run_pipeline("pipeline1", _img(), {})
-    assert [name for name, _ in out] == ["equalize", "otsu", "thin"]
+    assert [name for name, _ in out] == ["stretch", "otsu", "thin"]
     assert out[-1][1].shape == (12, 12)
 
 

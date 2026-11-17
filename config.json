@@ -2,11 +2,8 @@
   "input_dir": "data/sample",
   "output_dir": "results",
   "pipelines": {
-    "pipeline1": {
-      "equalize": {},
-      "otsu": {},
-      "thin": {}
-    },
+    "pipeline1": {"stretch": {"low_pct": 1, "high_pct": 99}, "otsu": {}, "thin": {}},
+    "pipeline1_eq": {"equalize": {}, "otsu": {}, "thin": {}},
     "pipeline2": {
       "fft": {"low": 0.18, "high": 0.45, "pad": 16},
       "sauvola": {"size": 15, "k": 0.1, "r": 128.0},

@@ -1,7 +1,7 @@
 import os
 
 from image_io import save_image
-from methods.histogram import equalize_histogram
+from methods.histogram import equalize_histogram, stretch_contrast
 from methods.segmentation import otsu_binarize, sauvola_binarize
 from methods.morphology import thin
 from methods.frequency import fft_enhance
@@ -13,11 +13,13 @@ STAGES = {
     "thin": lambda img, **p: thin(img),
     "fft": lambda img, **p: fft_enhance(img, **p),
     "sauvola": lambda img, **p: sauvola_binarize(img, **p),
+    "stretch": lambda img, **p: stretch_contrast(img, **p)
 }
 
 # Порядок стадій кожного пайплайна
 PIPELINES = {
-    "pipeline1": ["equalize", "otsu", "thin"],
+    "pipeline1": ["stretch", "otsu", "thin"],
+    "pipeline1_eq": ["equalize", "otsu", "thin"],
     "pipeline2": ["fft", "sauvola", "thin"],
 }
 
