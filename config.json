@@ -1,4 +1,11 @@
 {
+"degradations": {
+  "seed": 42,
+  "gaussian": [10, 25, 40],
+  "salt_pepper": [0.02, 0.05, 0.10],
+  "gradient": [40, 80, 120],
+  "contrast": [0.7, 0.5, 0.3]
+},
   "input_dir": "data/sample",
   "output_dir": "results",
   "pipelines": {
