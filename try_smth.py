@@ -1,4 +1,4 @@
-import glob
+""" import glob
 import numpy as np
 from image_io import load_gray, save_image
 from methods.segmentation import sauvola_binarize
@@ -16,4 +16,5 @@ for i, path in enumerate(sorted(glob.glob("data/sample/*"))[:6]):
     big = np.kron(np.where(sk, 0, 255), np.ones((4, 4), dtype=int))
     save_image(big, f"results/big{i}_skeleton.png")
     bigb = np.kron(binary, np.ones((4, 4), dtype=np.uint8))
-    save_image(bigb, f"results/big{i}_binary.png")
+    save_image(bigb, f"results/big{i}_binary.png") """
+    
