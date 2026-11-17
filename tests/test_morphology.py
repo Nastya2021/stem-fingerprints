@@ -36,3 +36,28 @@ def test_closing_fills_small_gap():
     img[2, 3:5] = 0            # розрив в одну клітинку посередині
     out = closing(img, size=3)
     assert out[2, 2] == 0      # розрив заповнено
+    
+from methods.morphology import thin
+
+
+def test_thin_single_pixel_stays():
+    img = np.full((5, 5), 255, dtype=np.uint8)
+    img[2, 2] = 0
+    assert np.array_equal(thin(img), img)
+
+
+def test_thin_one_pixel_line_unchanged():
+    # для середніх пікселів лінії A = 2, для кінців B = 1: нічого не видаляється
+    img = np.full((5, 7), 255, dtype=np.uint8)
+    img[2, 1:6] = 0
+    assert np.array_equal(thin(img), img)
+
+
+def test_thin_thick_line_becomes_thinner_but_not_empty():
+    img = np.full((7, 11), 255, dtype=np.uint8)
+    img[2:5, 1:10] = 0                      # лінія завтовшки 3
+    out = thin(img)
+    before, after = (img == 0), (out == 0)
+    assert after.sum() > 0                  # лінія не зникла
+    assert after.sum() < before.sum()       # стала тоншою
+    assert not np.any(after & ~before)      # нових пікселів не з'явилось
