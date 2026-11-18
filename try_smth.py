@@ -18,3 +18,6 @@ for i, path in enumerate(sorted(glob.glob("data/sample/*"))[:6]):
     bigb = np.kron(binary, np.ones((4, 4), dtype=np.uint8))
     save_image(bigb, f"results/big{i}_binary.png") """
     
+import pandas as pd
+df = pd.read_csv("results/metrics.csv")
+print(df.groupby("degradation")["level"].unique())
