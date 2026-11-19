@@ -15,8 +15,10 @@ def otsu_threshold(image):
     # ділимо тільки там, де обидва класи непорожні
     valid = (w0 > 0) & (w1 > 0)
     sigma = np.zeros(256)
+    # Середня яскравість темного (m0) і світлого (m1) класів для кожного порогу
     m0 = mean_cum[valid] / w0[valid]
     m1 = (mean_total - mean_cum[valid]) / w1[valid]
+    # Міжкласова дисперсія: чим більша, тим краще розділені темні й світлі пікселі
     sigma[valid] = w0[valid] * w1[valid] * (m0 - m1) ** 2
 
     return int(np.argmax(sigma))
@@ -25,6 +27,7 @@ def otsu_threshold(image):
 def otsu_binarize(image):
     """Бінаризація за Оцу: гребені (темні) = 0, фон = 255."""
     t = otsu_threshold(image)
+    # Темніші або рівні порогу пікселі стають чорними (0), світліші — білими (255)    
     return np.where(image <= t, 0, 255).astype(np.uint8)
 
 def local_stats(image, size=15):
@@ -33,7 +36,7 @@ def local_stats(image, size=15):
     img = image.astype(np.float64)
     padded = np.pad(img, r, mode="edge")   # край продовжуємо крайніми пікселями
     h, w = img.shape
-
+    # Накопичуватимемо суму значень і суму квадратів значень у вікні для кожного пікселя
     total = np.zeros((h, w))
     total_sq = np.zeros((h, w))
     for dy in range(size):
@@ -51,5 +54,7 @@ def local_stats(image, size=15):
 def sauvola_binarize(image, size=15, k=0.2, r=128.0):
     """Локальна бінаризація Саувола: гребені = 0, фон = 255."""
     mean, std = local_stats(image, size)
+    # Локальний поріг залежить від середньої яскравості вікна та локального контрасту (std / r)
     threshold = mean * (1 + k * (std / r - 1))
+    # Усе, що не світліше за локальний поріг, вважаємо гребенем (0), решту — фоном (255)
     return np.where(image <= threshold, 0, 255).astype(np.uint8)
